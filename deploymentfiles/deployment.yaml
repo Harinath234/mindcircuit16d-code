@@ -18,7 +18,6 @@ spec:
       name: fb-pod 
       labels:
         app: facebook
-        env: lab 
         version: v1_AC
     spec:
       containers:
