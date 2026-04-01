@@ -22,6 +22,6 @@ spec:
     spec:
       containers:
         - name: fb-pod-cont
-          image: harinath93811/dockerized-app:fb_httpd
+          image: harinath93811/dockerized-app:Sample_MultiStage_App
           ports:
             - containerPort: 8080
