@@ -24,8 +24,8 @@ pipeline {
         
         sh '''
             mvn sonar:sonar \
-                -Dsonar.host.url=http://3.239.99.46:9000 \
-                -Dsonar.login=squ_3d6a4c781ff2d14c64d1a8c6db5fe19c433d7a3c
+                -Dsonar.host.url=http://54.90.213.124:9000 \
+                -Dsonar.login=squ_ef4264f1b751f370598f4de5a68d827ffd8720a6
         '''
          }
        }
@@ -36,8 +36,6 @@ pipeline {
                 sh 'mvn clean package' 
             } 
         } 
-	
-	
 	
       stage('Build Docker Image') { 
             steps { 
@@ -55,12 +53,11 @@ pipeline {
             } 
         } 
 	
-	
 	  stage('Push to Docker Hub') { 
             steps { 
                 script { 
                   	withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                         sh 'docker login -u Harinath234 -p ${dockerhub}' 
+                         sh 'docker login -u harinath93811 -p ${dockerhub}' 
                       }
                     // Push the Docker image to Docker Hub 
                     sh 'docker push harinath93811/dockerized-app:${BUILD_NUMBER}' 
@@ -68,8 +65,6 @@ pipeline {
                 } 
             } 
         } 
-	
-	
 
 	stage('Update Deployment File') { 
             environment {
@@ -78,7 +73,7 @@ pipeline {
             } 
             steps { 
                 echo 'Update Deployment File' 
-                  }     
+                  script {  
                 withCredentials([string(credentialsId: 'githubtoken', variable: 'githubtoken')]) { 
                     sh ''' 
                         # Configure git user 
@@ -86,7 +81,7 @@ pipeline {
                         git config user.name "Harinath" 
 						
                         # Replace the tag in the deployment YAML file with the current buil  number 						
-                        sed -i "s/dockerized-app:.*/dockerized-app:${BUILD_NUMBER}/g" deploymentfiles/deployment.yaml 
+                        sed -i "s/dockerized-app:.*/dockerized-app:${BUILD_NUMBER}/g" deploymentfiles/deployment.yaml
 						
                         #Stage all changes
                         git add . 
@@ -97,6 +92,6 @@ pipeline {
                 } 
             } 
         } 
-         
     } 
-}
+	}
+	}
