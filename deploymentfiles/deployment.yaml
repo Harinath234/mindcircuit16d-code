@@ -22,6 +22,6 @@ spec:
     spec:
       containers:
         - name: fb-pod-cont
-          image: harinath93811/dockerized-app:3
+          image: harinath93811/dockerized-app:5
           ports:
             - containerPort: 8080
