@@ -2,7 +2,7 @@
 
 <html> 
 
-<h1> WELCOME TO Sample Application </h1> 
+<h1> WELCOME TO Sample Application version2 </h1> 
 
 </html>
 
