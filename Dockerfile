@@ -1,12 +1,3 @@
-FROM maven AS buildstage 
-RUN mkdir /opt/mindcircuit16d
-WORKDIR /opt/mindcircuit16d
-COPY . .
-RUN mvn clean install #generate---> *.war
-
-
-FROM tomcat 
-WORKDIR webapps
-COPY --from=buildstage /opt/mindcircuit16d/target/*.war .
-RUN rm -rf ROOT && mv *.war ROOT.war
-EXPOSE 8080
+FROM tomcat
+COPY target/*.war /usr/local/tomcat/webapps/
+RUN rm -rf /usr/local/tomcat/webapps/ROOT && mv /usr/local/tomcat/webapps/*.war /usr/local/tomcat/webapps/ROOT.war
